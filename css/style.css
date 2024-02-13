@@ -283,6 +283,14 @@ img.portfolio-project {
   max-width: 1200px;
 }
 
+.img-finance {
+	width: 50%;
+  max-width: 1200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .visit-site {
 	padding: 15px;
 	padding-top: 10px;
