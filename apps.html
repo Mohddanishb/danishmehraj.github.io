@@ -227,7 +227,7 @@
         </div>
         <div class="footer-copyright">
             <div class="container center">
-                ©2020 Danish Mehraj. All Rights Reserved | Made with love
+                &copy; <span id="copyright-year"></span> | Danish Mehraj | Made with Love
             </div>
         </div>
     </footer>
@@ -238,5 +238,8 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/init.js"></script>
+    <script>
+        document.querySelector('#copyright-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>

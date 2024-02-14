@@ -140,7 +140,6 @@
 drift.SNIPPET_VERSION = '0.3.1';
 drift.load('697cvv5i4c6v');
 -->
-  </body>
   <footer class="page-footer accent-color">
     <!--   <div class="row center">
            <a href="/index.html" id="download-button" class="btn-large waves-effect accent-color">Home</a>
@@ -187,9 +186,13 @@ drift.load('697cvv5i4c6v');
                </div>
            </div>
            <div class="footer-copyright">
-               <div class="container center">
-                  ©2024 Danish Mehraj. All Rights Reserved | Made with love.
-               </div>
-           </div>
- </footer>
+            <div class="container center">
+                &copy; <span id="copyright-year"></span> | Danish Mehraj | Made with Love
+            </div>
+        </div>
+  </footer>
+  <script>
+    document.querySelector('#copyright-year').textContent = new Date().getFullYear();
+</script>
+  </body>
 </html>
