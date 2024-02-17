@@ -398,6 +398,10 @@ div.quick-bio i.fa.fa-twitter {color: #1976d2;opacity: 1;}
   margin: -58px 0 10px 10px;
 }
 
+.heart {
+  color: white;
+}
+
 pre {
   background-color: transparent;
   background-color: rgba(0, 0, 0, 0.01);
