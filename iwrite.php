@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="theme-color" content="#1976d2">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <meta name="keywords" content="AngularJS, javascript frameworks, Google Material Design, flat design, javascript inheritance, prototypal inheritance, prototype chaining javascript, javascript prototype property, prototypes javascript, function prototype javascript, prototypes in javascript, javascript create prototype, what is javascript prototype, prototype function javascript, javascript set prototype, create prototype javascript, javascript using prototype, what is prototype javascript, use of prototypes in javascript, how to use prototypes in javascript">
+  <meta name="keywords" content="Danish Mehraj, microsoft student partner, developer, awards rural health, digital india, singer, dancer, writer, kashmir, srinagar, khrew, Danish, Mehraj, Flat Design Portfolio, Danish, khrew, mehraj , finance, kashmir, photos, kashmir, jammu, jammu and kashmir, srinagar, microsoft, accounts, apps, social, activist, portfolio, pampore, developer, software">
   <meta name="description" content="Welcome to my Front End Development Portfolio Site Blog. Here I like to discuss Material Design and Flat Design, Javascript, AngularJS, jQuery, and other web technologies.">
   <meta name="author" content="Danish Mehraj">
   <title>Danish Mehraj | Blog</title>
