@@ -5173,7 +5173,10 @@ nav {
 @media only screen and (min-width : 601px) {
   nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     height: 80px;
-    line-height: 80px; }
+    line-height: 80px; 
+    background-color: rgb(226, 50, 55);
+  
+  }
 
   .navbar-fixed {
     height: 64px; }
