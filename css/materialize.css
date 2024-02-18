@@ -5174,8 +5174,6 @@ nav {
   nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     height: 80px;
     line-height: 80px; 
-    background-color: rgb(226, 50, 55);
-  
   }
 
   .navbar-fixed {
@@ -6765,7 +6763,7 @@ ul.side-nav {
   height: 100%;
   height: calc(100% + 60px);
   padding-bottom: 60px;
-  background-color: #b7b7b7;
+  background-color: rgb(226, 50, 55);
   z-index: 999;
   will-change: left;
   border-right: 10px solid #eee; }
