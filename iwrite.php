@@ -158,7 +158,7 @@
                           <h5 class="white-text center">Loving Quote</h5>
                           
                           <div class="center">
-                             <p class="grey-text text-lighten-4 center"> "Thousands of desires...each worth dying for...many of them I have realized...I yearn for more"</>
+                             <p class="grey-text text-lighten-4 center"> "Thousands of desires...each worth dying for...many of them I have realized...I yearn for more"</p>
                           </div>
                       </div>
                  </div>
