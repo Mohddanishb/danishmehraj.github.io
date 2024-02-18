@@ -83,6 +83,7 @@ hr {
 img.logo {
   width: 60px;
   height: auto;
+  vertical-align: middle;
 }
 
 a#logo-container {
