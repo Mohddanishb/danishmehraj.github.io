@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engagement | Danish & Ulfat Jan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Cinzel+Decorative:wght@700&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #dfba73;
+      --light-gold: #faecc9;
+      --deep-bg: #071913;
+      --card-bg: rgba(14, 38, 30, 0.7);
+      --card-border: rgba(223, 186, 115, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: #071913;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 20%, #0e3025 0%, var(--deep-bg) 80%);
+      z-index: -1;
+    }
+
+    canvas#fx-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 30; 
+    }
+
+    /* --- COVER SCREEN & LOGO STYLES --- */
+    #cover-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 50%, #0e3025 0%, var(--deep-bg) 100%);
+      transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #cover-screen.hidden {
+      opacity: 0;
+      transform: scale(1.1);
+      pointer-events: none;
+    }
+    
+    .tagline {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .brand-logo {
+      width: 240px;
+      height: 240px;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    .brand-logo svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 15px rgba(223, 186, 115, 0.2));
+    }
+    
+    .logo-ring {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 1.2;
+      stroke-dasharray: 6 8;
+      transform-origin: 50% 50%;
+      animation: spinRing 25s linear infinite;
+    }
+    
+    .logo-diamond {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 0.6;
+      transform-origin: 50% 50%;
+      animation: spinDiamond 30s linear infinite reverse;
+    }
+
+    .logo-d, .logo-u {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 70px;
+      fill: transparent;
+      stroke: #ffffff;
+      stroke-width: 1.5;
+      stroke-dasharray: 350;
+      stroke-dashoffset: 350;
+      animation: drawText 2.5s ease-in-out forwards, glowText 1s ease-in 2.5s forwards;
+    }
+
+    .logo-amp {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 38px;
+      fill: var(--gold);
+      opacity: 0;
+      animation: fadeInAmp 2s ease-in 2s forwards;
+    }
+
+    @keyframes spinRing { 100% { transform: rotate(360deg); } }
+    @keyframes spinDiamond { 100% { transform: rotate(360deg); } }
+    
+    @keyframes drawText {
+      0% { stroke-dashoffset: 350; }
+      100% { stroke-dashoffset: 0; }
+    }
+    
+    @keyframes glowText {
+      100% { 
+        fill: #ffffff; 
+        stroke: transparent; 
+        filter: drop-shadow(0 0 15px rgba(223, 186, 115, 0.8)); 
+      }
+    }
+    
+    @keyframes fadeInAmp {
+      100% { opacity: 0.9; }
+    }
+
+    .open-btn {
+      margin-top: 1.5rem;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(14, 38, 30, 0.5);
+      backdrop-filter: blur(5px);
+      border: 1px solid var(--gold);
+      color: var(--light-gold);
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 0 20px rgba(223, 186, 115, 0.15), inset 0 0 20px rgba(223, 186, 115, 0.15);
+      animation: pulseSeal 2s infinite ease-in-out;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .open-btn:active {
+      transform: scale(0.9);
+      background: rgba(223, 186, 115, 0.2);
+    }
+
+    @keyframes pulseSeal {
+      0%, 100% { box-shadow: 0 0 20px rgba(223, 186, 115, 0.15), inset 0 0 20px rgba(223, 186, 115, 0.15); }
+      50% { box-shadow: 0 0 35px rgba(223, 186, 115, 0.4), inset 0 0 30px rgba(223, 186, 115, 0.3); }
+    }
+
+    /* --- MAIN CONTENT STYLES --- */
+    .wrapper {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 4rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      transform: scale(0.95) translateY(30px);
+      transition: opacity 1.8s cubic-bezier(0.25, 1, 0.5, 1) 0.4s, transform 1.8s cubic-bezier(0.25, 1, 0.5, 1) 0.4s;
+    }
+
+    .wrapper.unlocked {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    .bismillah {
+      font-family: 'Amiri', serif;
+      font-size: 1.7rem;
+      color: var(--light-gold);
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+
+    .rings-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      animation: pulse 3s infinite ease-in-out;
+    }
+
+    .rings-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 1.5;
+    }
+
+    .names-container {
+      margin-bottom: 2rem;
+    }
+
+    .name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2.2rem;
+      color: #ffffff;
+      text-shadow: 0 0 20px rgba(223, 186, 115, 0.45);
+      line-height: 1.2;
+    }
+
+    .ampersand {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin: 0.2rem 0;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .dua-arabic {
+      font-family: 'Amiri', serif;
+      font-size: 1.5rem;
+      line-height: 2.1;
+      color: var(--light-gold);
+      margin-bottom: 1.2rem;
+      direction: rtl;
+    }
+
+    .dua-translation {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: #e5e5e5;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .verse {
+      font-size: 0.82rem;
+      color: #b5c7be;
+      border-top: 1px dashed rgba(223, 186, 115, 0.2);
+      margin-top: 1.2rem;
+      padding-top: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, #d3aa5a 0%, #b88a3b 100%);
+      color: #071913;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 20px rgba(223, 186, 115, 0.35);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .action-btn:active {
+      transform: scale(0.96);
+      box-shadow: 0 2px 10px rgba(223, 186, 115, 0.2);
+    }
+
+    .counter-text {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: #9cb5aa;
+      letter-spacing: 1px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.06); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-layer"></div>
+  <canvas id="fx-canvas"></canvas>
+
+  <!-- COVER SCREEN -->
+  <div id="cover-screen">
+    <p class="tagline" style="margin-bottom: 0.5rem;">25-10-2026</p>
+    
+    <!-- Animated SVG Brand Logo -->
+    <div class="brand-logo">
+      <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+        <!-- Geometric Elements -->
+        <circle class="logo-ring" cx="120" cy="120" r="105" />
+        <rect class="logo-diamond" x="45" y="45" width="150" height="150" transform="rotate(45 120 120)" />
+        <rect class="logo-diamond" x="35" y="35" width="170" height="170" transform="rotate(45 120 120)" style="animation-direction: normal; opacity: 0.4" />
+        
+        <!-- Glowing Ambient Stars -->
+        <path d="M120 30 L122 38 L130 40 L122 42 L120 50 L118 42 L110 40 L118 38 Z" fill="#dfba73">
+          <animate attributeName="opacity" values="0.2;1;0.2" dur="3s" repeatCount="indefinite"/>
+        </path>
+        <path d="M120 210 L122 202 L130 200 L122 198 L120 190 L118 198 L110 200 L118 202 Z" fill="#dfba73">
+          <animate attributeName="opacity" values="0.2;1;0.2" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+        </path>
+        
+        <!-- Animated Initials -->
+        <text x="80" y="145" class="logo-d" text-anchor="middle">D</text>
+        <text x="120" y="140" class="logo-amp" text-anchor="middle">&amp;</text>
+        <text x="160" y="145" class="logo-u" text-anchor="middle">U</text>
+      </svg>
+    </div>
+
+    <button class="open-btn" id="open-btn">
+      <span style="font-size: 1.5rem; margin-bottom: 5px;">✧</span>
+      Tap to<br>Open
+    </button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="wrapper" id="main-content">
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+
+    <div class="rings-icon">
+      <svg viewBox="0 0 100 100">
+        <circle cx="38" cy="50" r="26" />
+        <circle cx="62" cy="50" r="26" />
+        <path d="M 50 20 L 53 26 L 47 26 Z" fill="#dfba73" />
+      </svg>
+    </div>
+
+    <p class="tagline">Engagement • 25-10-2026</p>
+    
+    <div class="names-container">
+      <h1 class="name">Danish</h1>
+      <div class="ampersand">&</div>
+      <h1 class="name">Ulfat Jan</h1>
+    </div>
+
+    <section class="card">
+      <p class="dua-arabic">
+        بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ
+      </p>
+      <p class="dua-translation">
+        "May Allah bless you both, shower His bounties upon you, and unite your hearts in perpetual goodness."
+      </p>
+      <p class="verse">
+        "And He placed between you affection and mercy."<br>
+        <span style="font-size: 0.75rem; color: var(--gold);">(Surah Ar-Rum: 21)</span>
+      </p>
+    </section>
+
+    <button class="action-btn" id="bless-btn">Tap to Shower Blessings 🌸</button>
+    <p class="counter-text" id="counter">Total Duas & Blessings Showered: <span>0</span></p>
+  </main>
+
+  <script>
+    // Canvas & Particle Engine
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+      constructor(x, y, isBurst = false, isMassive = false) {
+        this.x = x ?? Math.random() * canvas.width;
+        this.y = y ?? (isBurst ? y : Math.random() * canvas.height);
+        this.size = Math.random() * (isMassive ? 6 : 4) + 2;
+        
+        const spread = isMassive ? 15 : 8;
+        this.speedX = isBurst ? (Math.random() - 0.5) * spread : (Math.random() - 0.5) * 0.8;
+        this.speedY = isBurst ? (Math.random() - 0.5) * spread - 3 : Math.random() * 1.5 + 0.5;
+        
+        this.opacity = 1;
+        this.decay = isBurst ? Math.random() * 0.015 + 0.01 : 0.003;
+        this.color = ['#dfba73', '#faecc9', '#ffb6c1', '#ffffff'][Math.floor(Math.random() * 4)];
+        this.type = Math.random() > 0.5 ? 'petal' : 'star';
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.opacity -= this.decay;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = Math.max(this.opacity, 0);
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = this.color;
+
+        ctx.beginPath();
+        if (this.type === 'petal') {
+          ctx.ellipse(this.x, this.y, this.size, this.size * 1.6, Math.PI / 4, 0, Math.PI * 2);
+        } else {
+          ctx.arc(this.x, this.y, this.size / 1.5, 0, Math.PI * 2);
+        }
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function createBurst(x, y, count = 35, isMassive = false) {
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle(x, y, true, isMassive));
+      }
+    }
+
+    // Ambient floating particles
+    setInterval(() => {
+      if (particles.length < 60) {
+        particles.push(new Particle(Math.random() * canvas.width, -10, false));
+      }
+    }, 200);
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].opacity <= 0 || particles[i].y > canvas.height + 20 || this.x < 0 || this.x > canvas.width) {
+          particles.splice(i, 1);
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Interaction Logic
+    let isUnlocked = false;
+    let blessCount = 0;
+    
+    const coverScreen = document.getElementById('cover-screen');
+    const mainContent = document.getElementById('main-content');
+    const openBtn = document.getElementById('open-btn');
+    const blessBtn = document.getElementById('bless-btn');
+    const counterSpan = document.querySelector('#counter span');
+
+    // 1. Cover Opening Transition
+    openBtn.addEventListener('click', (e) => {
+      const rect = openBtn.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      
+      // Trigger a massive cinematic burst
+      createBurst(x, y, 120, true); 
+      
+      // Execute transition classes
+      coverScreen.classList.add('hidden');
+      mainContent.classList.add('unlocked');
+      isUnlocked = true;
+
+      // Remove cover from DOM after animation completes to free memory
+      setTimeout(() => {
+        coverScreen.style.display = 'none';
+      }, 1500);
+    });
+
+    // 2. Blessing Button Interaction
+    function triggerBlessing(e) {
+      if (!isUnlocked) return;
+      
+      const x = e.clientX || (e.touches && e.touches[0].clientX) || window.innerWidth / 2;
+      const y = e.clientY || (e.touches && e.touches[0].clientY) || window.innerHeight / 2;
+      
+      createBurst(x, y, 40);
+      blessCount++;
+      counterSpan.textContent = blessCount;
+    }
+
+    blessBtn.addEventListener('click', triggerBlessing);
+    
+    // Ambient touch bursts (only active when unlocked)
+    window.addEventListener('touchstart', (e) => {
+      if (isUnlocked && e.target !== blessBtn && e.target.tagName !== 'BUTTON') {
+        triggerBlessing(e);
+      }
+    });
+  </script>
+</body>
+</html>
