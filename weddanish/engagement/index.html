@@ -318,6 +318,13 @@
   <div class="bg-layer"></div>
   <canvas id="fx-canvas"></canvas>
 
+  <!-- BACKGROUND MUSIC ELEMENT -->
+  <!-- REPLACE "your-music-file.mp3" WITH YOUR ACTUAL MUSIC FILE PATH/URL -->
+  <audio id="bg-music" loop>
+    <source src="sammi.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
   <!-- COVER SCREEN -->
   <div id="cover-screen">
     <p class="tagline" style="margin-bottom: 0.5rem;">19-10-2026</p>
@@ -467,7 +474,7 @@
     }
     animate();
 
-    // Interaction Logic
+    // Interaction Logic & Audio Trigger
     let isUnlocked = false;
     let blessCount = 0;
     
@@ -476,8 +483,9 @@
     const openBtn = document.getElementById('open-btn');
     const blessBtn = document.getElementById('bless-btn');
     const counterSpan = document.querySelector('#counter span');
+    const bgMusic = document.getElementById('bg-music'); // Reference the audio element
 
-    // 1. Cover Opening Transition
+    // 1. Cover Opening Transition and Music Play
     openBtn.addEventListener('click', (e) => {
       const rect = openBtn.getBoundingClientRect();
       const x = rect.left + rect.width / 2;
@@ -485,6 +493,11 @@
       
       // Trigger a massive cinematic burst
       createBurst(x, y, 120, true); 
+      
+      // Play Background Music
+      bgMusic.play().catch(error => {
+        console.log("Audio playback failed (browser settings may block auto-play):", error);
+      });
       
       // Execute transition classes
       coverScreen.classList.add('hidden');
